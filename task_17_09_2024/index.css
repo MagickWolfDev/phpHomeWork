@@ -1,0 +1,146 @@
+body {
+    padding: 0px;
+    margin: 0px;
+}
+
+.wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.header {
+    color: #ccc;
+    font-family: "Roboto", system-ui;
+    font-weight: 900;
+    font-style: normal;
+}
+
+.form {
+    width: clamp(300px, 80vw, 1200px);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 10px;
+    font-family: "Roboto", system-ui;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.form-input {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 0px;
+}
+
+.form-input > label {
+    align-self: flex-start;
+}
+
+.form-input > input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 1px solid;
+    border-color: #222;
+    border-radius: 10px;
+    color: #ccc;
+    font-size: 15px;
+}
+
+.form-input > textarea {
+    width: 100%;
+    height: 150px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 1px solid;
+    border-color: #222;
+    border-radius: 10px;
+    color: #ccc;
+    font-size: 15px;
+    resize: none;
+}
+
+.button {
+    width: 100%;
+    height: 40px;
+    border: none;
+    transition: ease-in-out 0.1s;
+    cursor: pointer;
+    font-family: "Roboto", system-ui;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.select {
+    min-width: 150px;
+    height: 40px;
+    border-radius: 10px;
+    padding: 5px;
+    border: none;
+    font-family: "Roboto", system-ui;
+    font-weight: 500;
+    font-style: normal;
+    
+}
+
+.color-pr {
+    background-color: #2b3035;
+}
+
+.color-btn-pr {
+    background-color: #0d6efd;
+}
+
+.color-btn-pr:hover {
+    background-color: #0b5ed7;
+}
+
+.color-sc {
+    background-color: #212529;
+    color: #ccc;
+}
+
+.messages {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.message-contaner {
+    width: clamp(300px, 80vw, 1200px);
+    margin: 10px;
+    border-radius: 10px;
+    font-family: "Roboto", system-ui;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.message-heder {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.message-heder > label {
+    background-color: #2b3035;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.message-body {
+    padding: 12px;
+    color: #ccc;
+}
+
+.filters {
+    display: flex;
+    justify-content: flex-end;
+    width: clamp(300px, 80vw, 1200px);
+    margin-top: 10px;
+}
