@@ -1,5 +1,21 @@
 <?php
 
+    function normalize($text) // заменяет в тексте неудобные для сохранения символы
+    {
+    // последовательно заменяем служебные символы для предотвращения HTML-инъекций
+        $text=str_replace("&", '&#38;', $text); // заменяем & на HTML-мнемонику
+        $text=str_replace(':', '&#58;', $text); // заменяем двоеточие на HTML-мнемонику
+        $text=str_replace('"', '&quot;',$text); // заменяем двойные кавычки на HTML-мнемонику
+        $text=str_replace("'", '&#39;', $text); // заменяем одинарные кавычки на HTML-мнемонику
+        $text=str_replace('<', '&lt;', $text); // заменяем меньше на HTML-мнемонику
+        $text=str_replace('>', '&gt;', $text); // заменяем больше на HTML-мнемонику
+        $br='<br>'; //указываем символьное обозначение перевода строки, которео будем исполоьзовать для замены
+        $text=str_replace("\r\n", $br, $text); //сначала приводим виндовые переводы строк в символьные
+        $text=str_replace("\r", $br, $text); // теперь переводим маковские переводы строк в символьные
+        $text=str_replace("\n", $br, $text); // теперь переводим юниксовые переводы строк в символьные
+        return $text;
+    }
+
     $messages = [];
 
     //Подгружаем данные из файла
@@ -13,12 +29,13 @@
     $messages = json_decode($json, true);
 
     //При успешно переданных данных, пишем их в файл
-    if($_POST["message"] & $_POST["email"])
+    if($_POST["message"] & $_POST["email"] & $_POST["name"])
     {
         $date = time();
         array_push($messages, [
             "email" => $_POST["email"],
-            "message" => $_POST["message"],
+            "message" => normalize($_POST["message"]),
+            "name" => normalize($_POST["name"]),
             "date" => $date,
         ]);
 
@@ -51,6 +68,10 @@
                 <input class="color-pr" type="email" id="email" name="email" required>
             </div>
             <div class="form-input">
+                <label for="name">Имя:</label>
+                <input class="color-pr" type="name" id="name" name="name" required>
+            </div>
+            <div class="form-input">
                 <label for="message">Сообщение:</label>
                 <textarea class="color-pr" id="message" name="message"></textarea>
             </div>
@@ -70,12 +91,13 @@
 
                     $email = $value["email"];
                     $data = date("d.m.y h:m:s",  intval($value["date"]));
-                    $message = str_replace(array("\r\n", "\r", "\n"), '<br>', $value["message"]);
-                    
+                    $name = $value["name"];
+                    $message = $value["message"];
+
                     echo "
                     <div class=\"message-contaner color-sc\">
                         <div class=\"message-heder\">
-                            <label>$email</label>
+                            <label>$name</label>
                             <label>$data</label>
                         </div>
                         <div class=\"message-body\">
