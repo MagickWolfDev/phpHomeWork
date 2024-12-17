@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма регистрации</title>
+    <script src="script.js" defer></script>
+</head>
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+   #registrationForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50vw;
+    background-color: #cccccc;
+    border-radius: 16px;
+    padding: 10px;
+   } 
+</style>
+<body>
+    <h1>Регистрация</h1>
+    <form id="registrationForm">
+        <label for="name">Имя:</label>
+        <input type="text" id="name" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" required><br><br>
+
+        <label for="age">Возраст:</label>
+        <input type="number" id="age" required><br><br>
+
+        <label for="specialty">Специальность:</label>
+        <input type="text" id="specialty" required><br><br>
+
+        <label for="experience">Стаж работы (лет):</label>
+        <input type="number" id="experience" required><br><br>
+
+        <button type="submit">Отправить</button>
+    </form>
+
+    <div id="message"></div>
+</body>
+</html>
+<script>
+document.getElementById('registrationForm').addEventListener('submit', function(event) {
+    event.preventDefault(); 
+
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const age = parseInt(document.getElementById('age').value);
+    const specialty = document.getElementById('specialty').value;
+    const experience = parseInt(document.getElementById('experience').value);
+    const messageDiv = document.getElementById('message');
+
+    if (!name || !email || !age || !specialty || !experience) {
+        messageDiv.textContent = 'Пожалуйста, заполните все поля.';
+        messageDiv.style.color = "#FF8800";
+        return;
+    }
+
+    if (age <= 30) {
+        messageDiv.textContent = 'Возраст должен быть больше 30 лет.';
+        messageDiv.style.color = "#FF8800";
+        return;
+    }
+
+    if (experience <= 5) {
+        messageDiv.textContent = 'Стаж работы должен быть более 5 лет.';
+        messageDiv.style.color = "#FF8800";
+        return;
+    }
+
+    const data = {
+        name: name,
+        email: email,
+        age: age,
+        specialty: specialty,
+        experience: experience
+    };
+
+    fetch('save_data.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.text())
+    .then(data => {
+        messageDiv.textContent = data;
+        messageDiv.style.color = "#00aa00";
+    })
+    .catch((error) => {
+        console.error('Ошибка:', error);
+        messageDiv.textContent = 'Произошла ошибка при отправке данных.';
+        messageDiv.style.color = "#FF0000";
+    });
+});    
+</script>
