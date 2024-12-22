@@ -18,6 +18,16 @@
 
     $messages = [];
 
+
+   // Проверяем, существует ли файл
+    if (!file_exists('data.json')) {
+        // Если файл не существует, создаем его
+        $file = fopen('data.json', 'w'); 
+        fwrite($file, "");
+        fclose($file);
+    }
+
+
     //Подгружаем данные из файла
     $json = file_get_contents(__DIR__ . '/data.json');
 
